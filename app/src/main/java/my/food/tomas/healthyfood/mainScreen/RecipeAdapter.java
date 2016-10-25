@@ -41,10 +41,10 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Recipe item = data.get(position);
-        holder.titleView.setText(item.title);
-        Picasso.with(holder.imageView.getContext()).load(item.image_url).into(holder.imageView);
-        holder.publisherView.setText(item.publisher);
-        holder.rankView.setText(String.format("%.0f%%", item.social_rank));
+        holder.titleView.setText(item.getTitle());
+        Picasso.with(holder.imageView.getContext()).load(item.getImageUrl()).into(holder.imageView);
+        holder.publisherView.setText(item.getPublisher());
+        holder.rankView.setText(String.format("%.0f%%", item.getSocialRank()));
     }
 
     @Override
