@@ -15,6 +15,8 @@ import my.food.tomas.healthyfood.dagger.module.DataModule;
 public class FoodApplication extends Application {
 
     private static AppComponent mAppComponent;
+    public static final String API_KEY = "13837e980aa8f2527d4a3154829215df";
+    public static final String BASE_URL = "http://food2fork.com";
 
     @Override
     public void onCreate() {
