@@ -21,19 +21,19 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
     private static final String TAG = MainScreenPresenter.class.getSimpleName();
     private Subscription mSubscription;
-    private AppRepository mAppRepository;
+    private AppRemoteDataStore appRemoteDataStore;
     private MainScreenContract.View mView;
     private RecipeSearchParams recipeSearchParams;
 
-    public MainScreenPresenter(AppRepository mAppRepository, MainScreenContract.View mView) {
-        this.mAppRepository = mAppRepository;
+    public MainScreenPresenter(AppRemoteDataStore appRemoteDataStore, MainScreenContract.View mView) {
+        this.appRemoteDataStore = appRemoteDataStore;
         this.mView = mView;
         mView.setPresenter(this);
     }
 
     @Override
     public void loadRecipesList() {
-        mSubscription = mAppRepository.getRecipesList(recipeSearchParams)
+        mSubscription = appRemoteDataStore.getRecipesList(recipeSearchParams)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(new Observer<List<RecipesList>>() {
