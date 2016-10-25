@@ -11,7 +11,7 @@ public class MainScreenContract {
 
     interface View extends BaseView<Presenter> {
 
-        void showPosts(List<Post> posts);
+       // void showPosts(List<Post> posts);
 
         void showError(String message);
 
