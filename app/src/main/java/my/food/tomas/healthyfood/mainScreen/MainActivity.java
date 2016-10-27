@@ -1,8 +1,13 @@
 package my.food.tomas.healthyfood.mainScreen;
 
+import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -17,86 +22,41 @@ import my.food.tomas.healthyfood.R;
 import my.food.tomas.healthyfood.data.AppRepository;
 import my.food.tomas.healthyfood.data.remote.AppRemoteDataStore;
 
-public class MainActivity extends AppCompatActivity implements MainScreenContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements MainFragment.OnMainFragmentListener {
 
-    private MainScreenContract.Presenter mPresenter;
-    private ListView listView;
-    private ArrayList list;
-    private ArrayAdapter adapter;
-
-    @Inject
-    AppRemoteDataStore appRemoteDataStore;
-    SwipeRefreshLayout swipeContainer;
+    private SearchView searchView;
+    private MenuItem searchClearItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //Inject dependency
-        FoodApplication.getAppComponent().inject(this);
-
-        listView = (ListView) findViewById(R.id.my_list);
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        swipeContainer.setOnRefreshListener(this);
-        list = new ArrayList<>();
-
-        new MainScreenPresenter(appRemoteDataStore, this);
+        setContentView(R.layout.activity_fragment_host);
+        initFragment(savedInstanceState);
     }
 
     @Override
-    public void showRecipesList(List recipesList) {
-        for (int i = 0; i < recipesList.size(); i++) {
-            list.add(recipesList.get(i).recipes());
-        }
-        //Create the array adapter and set it to list view
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
+    public void onStartRecipeActivity(String id) {
+        Intent intent = new Intent(this, RecipeActivity.class);
+        intent.putExtra(RecipeActivity.RECIPE_ID, id);
+        startActivity(intent);
     }
+
+
+
 
     @Override
-    public void showError(String message) {
-        Toast.makeText(this, "Error loading post", Toast.LENGTH_SHORT).show();
-        if (swipeContainer != null)
-            swipeContainer.post(new Runnable() {
-                @Override
-                public void run() {
-                    swipeContainer.setRefreshing(false);
-                }
-            });
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        setupSearchView();
+        searchClearItem = menu.findItem(R.id.action_search_clear);
+        return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public void showComplete() {
-        Toast.makeText(this, "Completed loading", Toast.LENGTH_SHORT).show();
 
-        if (swipeContainer != null)
-            swipeContainer.post(new Runnable() {
-                @Override
-                public void run() {
-                    swipeContainer.setRefreshing(false);
-                }
-            });
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mPresenter.subscribe();
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mPresenter.unsubscribe();
-    }
 
-    @Override
-    public void setPresenter(MainScreenContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
 
-    @Override
-    public void onRefresh() {
-        mPresenter.loadRecipesListFromRemoteDatastore();
-    }
 }

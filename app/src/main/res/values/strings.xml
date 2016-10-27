@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Healthy food</string>
+
+    <string name="search_clear">Clear all</string>
+
+    <string name="view">View</string>
+    <string name="list">List</string>
+    <string name="table">Table</string>
+
+    <string name="sort">Sort</string>
+    <string name="trending">Trending</string>
+    <string name="top">Top</string>
+
+    <string name="recipes_not_found">Recipes not found</string>
+    <string name="recipes_more_progress">Loading recipes...</string>
 </resources>
