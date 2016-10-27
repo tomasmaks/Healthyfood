@@ -74,13 +74,6 @@ public class DataModule {
         return retrofit;
     }
 
-
-//    @Provides
-//    @Singleton
-//    AppLocalDataStore porvidesAppLocalDataStore(Application context) {
-//        return new AppLocalDataStore(context);
-//    }
-
     @Provides
     @Singleton
     AppRemoteDataStore providesRepository() {

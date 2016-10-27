@@ -12,6 +12,7 @@ import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Tomas on 25/10/2016.
@@ -21,6 +22,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
     private static final String TAG = MainScreenPresenter.class.getSimpleName();
     private Subscription mSubscription;
+    private CompositeSubscription compositeSubscription;
     private AppRemoteDataStore appRemoteDataStore;
     private MainScreenContract.View mView;
     private RecipeSearchParams recipeSearchParams;
@@ -91,5 +93,10 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
         //Unsubscribe Rx subscription
         if (mSubscription != null && mSubscription.isUnsubscribed())
             mSubscription.unsubscribe();
+    }
+
+    private void checkCompositeSubscription() {
+        if (this.compositeSubscription == null || this.compositeSubscription.isUnsubscribed())
+            this.compositeSubscription = new CompositeSubscription();
     }
 }

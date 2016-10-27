@@ -82,14 +82,6 @@ public class Recipe implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-//    public List<String> getIngredients() {
-//        return ingredients;
-//    }
-//
-//    public void setIngredients(List<String> ingredients) {
-//        this.ingredients = ingredients;
-//    }
-
     public String getSourceUrl() {
         return sourceUrl;
     }

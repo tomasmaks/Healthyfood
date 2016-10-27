@@ -13,7 +13,7 @@ public class RecipeSearchParams implements Serializable {
     public int page;
 
     public RecipeSearchParams() {
-        query = "";
+        query = "pizza";
         sort = "r";
         page = 1;
     }

@@ -29,8 +29,8 @@ public class AppRemoteDataStore implements AppDataStore {
     @Inject
     Retrofit retrofit;
 
-    @Inject
-    AppLocalDataStore appLocalDataStore;
+//    @Inject
+//    AppLocalDataStore appLocalDataStore;
 
     public AppRemoteDataStore() {
         FoodApplication.getAppComponent().inject(this);

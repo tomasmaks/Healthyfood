@@ -24,10 +24,9 @@ public class FoodApplication extends Application {
 
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .dataModule(new DataModule("http://jsonplaceholder.typicode.com/"))
+                .dataModule(new DataModule(BASE_URL))
                 .build();
     }
-
 
     public static AppComponent getAppComponent() {
         return mAppComponent;
