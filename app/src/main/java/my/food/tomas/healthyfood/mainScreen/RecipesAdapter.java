@@ -28,9 +28,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     private OnItemClickListener onItemClickListener;
 
     private Context context;
-    private ArrayList<RecipesList> data;
+    private ArrayList<Recipe> data;
 
-    public RecipesAdapter(ArrayList<RecipesList> data) {
+    public RecipesAdapter(ArrayList<Recipe> data) {
         this.data = data;
     }
 
@@ -42,11 +42,11 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        RecipesList item = data.get(position);
+        Recipe item = data.get(position);
         holder.titleView.setText(item.getTitle());
         Picasso.with(holder.imageView.getContext()).load(item.getImageUrl()).into(holder.imageView);
         holder.publisherView.setText(item.getPublisher());
-        holder.rankView.setText(String.format("%.0f%%", item.getSocialRank()));
+//        holder.rankView.setText(String.format("%.0f%%", item.getSocialRank()));
     }
 
     @Override
@@ -79,10 +79,10 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         }
     }
 
-    public void addRecipesList(RecipesList recipesList) {
+    public void addRecipesList(ArrayList<Recipe> recipesList) {
         this.data.clear();
-        this.data.add(recipesList);
-        notifyDataSetChanged();
+        this.data.addAll(recipesList);
+        //notifyDataSetChanged();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

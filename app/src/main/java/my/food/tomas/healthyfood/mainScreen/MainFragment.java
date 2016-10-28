@@ -61,8 +61,9 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
     private RecipesAdapter recipesAdapter;
     private RecipeSearchParams recipeSearchParams;
-    private ArrayList<RecipesList> newRecipesList;
+    private ArrayList<Recipe> recList;
     private AppRemoteDataStore.Food2ForkApi mService;
+   // ArrayList<String> list;
 
 
     public static MainFragment newInstance() {
@@ -76,10 +77,13 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ButterKnife.bind(getActivity());
+
         new MainScreenPresenter(appRemoteDataStore, this);
         mPresenter.loadRecipesList(API_Q);
+
+
+
 
     }
 
@@ -105,22 +109,21 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        newRecipesList = new ArrayList<>();
         ButterKnife.bind(this, rootView);
         recipesRecyclerView = (RecyclerView) rootView.findViewById(R.id.recipes_recycler_view);
+        recList = new ArrayList<>();
         recipesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recipesAdapter = new RecipesAdapter(newRecipesList);
+        recipesAdapter = new RecipesAdapter(recList);
         recipesRecyclerView.setAdapter(recipesAdapter);
 
         return rootView;
     }
 
-
-
     @Override
     public void showRecipesList(RecipesList recipesList) {
-        recipesAdapter.addRecipesList(recipesList);
-
+        recList = recipesList.getRecipes();
+        recipesAdapter.addRecipesList(recList);
+        recipesAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -131,7 +134,6 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
     @Override
     public void showComplete() {
         Toast.makeText(getActivity(), "Completed loading", Toast.LENGTH_SHORT).show();
-
     }
 
 

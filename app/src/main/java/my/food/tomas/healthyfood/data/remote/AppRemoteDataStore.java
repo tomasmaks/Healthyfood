@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import my.food.tomas.healthyfood.FoodApplication;
 import my.food.tomas.healthyfood.data.AppDataStore;
 import my.food.tomas.healthyfood.data.local.AppLocalDataStore;
+import my.food.tomas.healthyfood.data.local.models.Recipe;
 import my.food.tomas.healthyfood.data.local.models.RecipeGet;
 import my.food.tomas.healthyfood.data.local.models.RecipeSearchParams;
 import my.food.tomas.healthyfood.data.local.models.RecipesList;

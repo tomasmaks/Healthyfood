@@ -2,8 +2,10 @@ package my.food.tomas.healthyfood.mainScreen;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import my.food.tomas.healthyfood.data.local.models.Recipe;
 import my.food.tomas.healthyfood.data.local.models.RecipeSearchParams;
 import my.food.tomas.healthyfood.data.local.models.RecipesList;
 import my.food.tomas.healthyfood.data.remote.AppRemoteDataStore;
@@ -28,6 +30,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
     private RecipeSearchParams recipeSearchParams;
     String query;
 
+
     public MainScreenPresenter(AppRemoteDataStore appRemoteDataStore, MainScreenContract.View mView) {
         this.appRemoteDataStore = appRemoteDataStore;
         this.mView = mView;
@@ -40,7 +43,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 //        compositeSubscription.add(this.appRemoteDataStore.getRecipesList(query)
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribeOn(Schedulers.newThread())
-//                .subscribe(new Subscriber <List<RecipesList>>() {
+//                .subscribe(new Observer<List<RecipesList>>() {
 //                    @Override
 //                    public void onCompleted() {
 //                        Log.d(TAG, "Complete");
@@ -65,7 +68,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
     public void loadRecipesList(String query) {
         new AppRemoteDataStore().getRecipesList(query).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
-                .subscribe(new Subscriber<RecipesList>() {
+                .subscribe(new Observer<RecipesList>() {
                     @Override
                     public void onCompleted() {
                         Log.d(TAG, "Complete");
@@ -81,6 +84,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
                     @Override
                     public void onNext(RecipesList recipesList) {
+                    //   recipesList.addAll(recipesList);
                         mView.showRecipesList(recipesList);
                     }
                 });

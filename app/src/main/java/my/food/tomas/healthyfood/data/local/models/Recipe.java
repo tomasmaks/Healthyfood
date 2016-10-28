@@ -29,9 +29,6 @@ public class Recipe implements Serializable {
     @SerializedName("image_url")
     private String imageUrl;
 
-//    @SerializedName("ingredients")
-//    private List<String> ingredients;
-
     @SerializedName("source_url")
     private String sourceUrl;
 
@@ -41,6 +38,16 @@ public class Recipe implements Serializable {
     @SerializedName("publisher_url")
     private String publisherUrl;
 
+    public Recipe(String publisher, String socialRank, String title, int page, String imageUrl, String sourceUrl, String f2fUrl, String publisherUrl) {
+        this.publisher = publisher;
+        this.socialRank = socialRank;
+        this.title = title;
+        this.page = page;
+        this.imageUrl = imageUrl;
+        this.sourceUrl = sourceUrl;
+        this.f2fUrl = f2fUrl;
+        this.publisherUrl = publisherUrl;
+    }
 
     public String getPublisher() {
         return publisher;

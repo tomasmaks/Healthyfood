@@ -2,6 +2,7 @@ package my.food.tomas.healthyfood.data;
 
 import java.util.List;
 
+import my.food.tomas.healthyfood.data.local.models.Recipe;
 import my.food.tomas.healthyfood.data.local.models.RecipeSearchParams;
 import my.food.tomas.healthyfood.data.local.models.RecipesList;
 import rx.Observable;
