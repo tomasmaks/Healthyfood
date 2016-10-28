@@ -17,6 +17,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static my.food.tomas.healthyfood.FoodApplication.API_KEY;
 
@@ -32,34 +33,44 @@ public class AppRemoteDataStore implements AppDataStore {
 //    @Inject
 //    AppLocalDataStore appLocalDataStore;
 
+
     public AppRemoteDataStore() {
         FoodApplication.getAppComponent().inject(this);
     }
 
     @Override
-    public Observable<List<RecipesList>> getRecipesList(RecipeSearchParams recipeSearchParams) {
+    public Observable<RecipesList> getRecipesList(String query) {
         Log.d("REMOTE", "Loaded from remote");
-        Observable<List<RecipesList>> call = null;
+        Observable<RecipesList> call = null;
         if (retrofit != null) {
             Food2ForkApi apiService = retrofit.create(Food2ForkApi.class);
-            if (recipeSearchParams == null) {
-                recipeSearchParams = new RecipeSearchParams();
-            }
             call = apiService.getRecipesList(
-                    API_KEY,
-                    recipeSearchParams.query,
-                    recipeSearchParams.sort,
-                    recipeSearchParams.page
+                    FoodApplication.API_KEY,
+                        query,
+                        "r",
+                        1
             );
         }
         return call;
     }
 
+//    @Override
+//    public Observable<List<RecipesList>> getRecipesList(String query) {
+//        return retrofit.create(Food2ForkApi.class)
+//                .getRecipesList(
+//                        FoodApplication.API_KEY,
+//                        "pizza",
+//                        "r",
+//                        1
+//
+//                )
+//                .subscribeOn(Schedulers.io());
+//    }
 
 
-    private interface Food2ForkApi {
+    public interface Food2ForkApi {
         @GET("/api/search")
-        Observable<List<RecipesList>> getRecipesList(@Query("key") String key, @Query("q") String q,
+        Observable<RecipesList> getRecipesList(@Query("key") String key, @Query("q") String q,
                                                                       @Query("sort") String sort, @Query("page") int page);
 
         @GET("/api/get")

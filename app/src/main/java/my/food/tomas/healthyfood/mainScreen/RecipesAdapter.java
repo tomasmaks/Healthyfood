@@ -79,9 +79,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         }
     }
 
-    public void addRecipesList(List<RecipesList> recipesList) {
+    public void addRecipesList(RecipesList recipesList) {
         this.data.clear();
-        this.data.addAll(recipesList);
+        this.data.add(recipesList);
         notifyDataSetChanged();
     }
 

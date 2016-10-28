@@ -4,11 +4,11 @@ import android.util.Log;
 
 import java.util.List;
 
-import my.food.tomas.healthyfood.data.AppRepository;
 import my.food.tomas.healthyfood.data.local.models.RecipeSearchParams;
 import my.food.tomas.healthyfood.data.local.models.RecipesList;
 import my.food.tomas.healthyfood.data.remote.AppRemoteDataStore;
 import rx.Observer;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -26,6 +26,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
     private AppRemoteDataStore appRemoteDataStore;
     private MainScreenContract.View mView;
     private RecipeSearchParams recipeSearchParams;
+    String query;
 
     public MainScreenPresenter(AppRemoteDataStore appRemoteDataStore, MainScreenContract.View mView) {
         this.appRemoteDataStore = appRemoteDataStore;
@@ -33,16 +34,43 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
         mView.setPresenter(this);
     }
 
+//    @Override
+//    public void loadRecipesList(String query) {
+//        checkCompositeSubscription();
+//        compositeSubscription.add(this.appRemoteDataStore.getRecipesList(query)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.newThread())
+//                .subscribe(new Subscriber <List<RecipesList>>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        Log.d(TAG, "Complete");
+//                        mView.showComplete();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.d(TAG, e.toString());
+//                        mView.showError(e.toString());
+//                    }
+//
+//                    @Override
+//                    public void onNext(List<RecipesList> recipesList) {
+//                        mView.showRecipesList(recipesList);
+//                    }
+//                })
+//        );
+//    }
+
     @Override
-    public void loadRecipesList() {
-        mSubscription = appRemoteDataStore.getRecipesList(recipeSearchParams)
-                .observeOn(AndroidSchedulers.mainThread())
+    public void loadRecipesList(String query) {
+        new AppRemoteDataStore().getRecipesList(query).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
-                .subscribe(new Observer<List<RecipesList>>() {
+                .subscribe(new Subscriber<RecipesList>() {
                     @Override
                     public void onCompleted() {
                         Log.d(TAG, "Complete");
                         mView.showComplete();
+                        //loadRecipesList(query);
                     }
 
                     @Override
@@ -52,32 +80,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(List<RecipesList> recipesList) {
-                        mView.showRecipesList(recipesList);
-                    }
-                });
-    }
-
-    @Override
-    public void loadRecipesListFromRemoteDatastore() {
-        new AppRemoteDataStore().getRecipesList(recipeSearchParams).observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(new Observer<List<RecipesList>>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.d(TAG, "Complete");
-                        mView.showComplete();
-                        loadRecipesList();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(TAG, e.toString());
-                        mView.showError(e.toString());
-                    }
-
-                    @Override
-                    public void onNext(List<RecipesList> recipesList) {
+                    public void onNext(RecipesList recipesList) {
                         mView.showRecipesList(recipesList);
                     }
                 });
@@ -85,7 +88,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
     @Override
     public void subscribe() {
-        loadRecipesList();
+        loadRecipesList(query);
     }
 
     @Override

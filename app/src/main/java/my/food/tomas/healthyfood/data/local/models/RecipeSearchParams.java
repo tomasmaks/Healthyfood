@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class RecipeSearchParams implements Serializable {
 
+    public String api;
     public String query;
     public String sort;
     public int page;

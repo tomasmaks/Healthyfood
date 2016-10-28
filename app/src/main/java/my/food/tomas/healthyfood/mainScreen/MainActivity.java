@@ -20,7 +20,6 @@ import javax.inject.Inject;
 
 import my.food.tomas.healthyfood.FoodApplication;
 import my.food.tomas.healthyfood.R;
-import my.food.tomas.healthyfood.data.AppRepository;
 import my.food.tomas.healthyfood.data.local.models.RecipeSearchParams;
 import my.food.tomas.healthyfood.data.remote.AppRemoteDataStore;
 import my.food.tomas.healthyfood.detailsScreen.RecipeActivity;

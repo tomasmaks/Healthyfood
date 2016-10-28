@@ -12,6 +12,6 @@ import rx.Observable;
 
 public interface AppDataStore {
 
-    Observable<List<RecipesList>> getRecipesList(RecipeSearchParams recipeSearchParams);
+    Observable<RecipesList> getRecipesList(String query);
 
 }

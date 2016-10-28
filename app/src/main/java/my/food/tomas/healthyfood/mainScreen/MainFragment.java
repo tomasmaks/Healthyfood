@@ -28,6 +28,7 @@ import my.food.tomas.healthyfood.data.local.models.Recipe;
 import my.food.tomas.healthyfood.data.local.models.RecipeSearchParams;
 import my.food.tomas.healthyfood.data.local.models.RecipesList;
 import my.food.tomas.healthyfood.data.remote.AppRemoteDataStore;
+import rx.Observable;
 
 import static android.R.id.list;
 
@@ -42,6 +43,10 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
     private OnMainFragmentListener mainFragmentListener;
 
     private MainScreenContract.Presenter mPresenter;
+    public static final String API_KEY = "13837e980aa8f2527d4a3154829215df";
+    public static final String API_Q = "pizza";
+    public static final String API_S = "r";
+    public static final int API_P = 1;
 
     @Inject
     AppRemoteDataStore appRemoteDataStore;
@@ -54,11 +59,10 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 //    @Bind(R.id.recipes_swipe_refresh)
 //    SwipeRefreshLayout recipesSwipeRefresh;
 
-    private RecyclerView.LayoutManager recipesLayoutManager;
     private RecipesAdapter recipesAdapter;
-
     private RecipeSearchParams recipeSearchParams;
     private ArrayList<RecipesList> newRecipesList;
+    private AppRemoteDataStore.Food2ForkApi mService;
 
 
     public static MainFragment newInstance() {
@@ -75,6 +79,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
         ButterKnife.bind(getActivity());
         new MainScreenPresenter(appRemoteDataStore, this);
+        mPresenter.loadRecipesList(API_Q);
 
     }
 
@@ -99,11 +104,11 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
         newRecipesList = new ArrayList<>();
         ButterKnife.bind(this, rootView);
         recipesRecyclerView = (RecyclerView) rootView.findViewById(R.id.recipes_recycler_view);
-        recipesLayoutManager = new LinearLayoutManager(getActivity());
-        recipesRecyclerView.setLayoutManager(recipesLayoutManager);
+        recipesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recipesAdapter = new RecipesAdapter(newRecipesList);
         recipesRecyclerView.setAdapter(recipesAdapter);
 
@@ -113,7 +118,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
 
     @Override
-    public void showRecipesList(List<RecipesList> recipesList) {
+    public void showRecipesList(RecipesList recipesList) {
         recipesAdapter.addRecipesList(recipesList);
 
     }
@@ -134,6 +139,11 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
     public void setPresenter(MainScreenContract.Presenter presenter) {
         mPresenter = presenter;
     }
+
+//    @Override
+//    public Observable<List<RecipesList>> getRecipesList() {
+//        return mService.getRecipesList(API_KEY, API_Q, API_S, API_P);
+//    }
 
 
     public interface OnMainFragmentListener {
