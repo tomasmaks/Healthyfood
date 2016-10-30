@@ -7,17 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import my.food.tomas.healthyfood.R;
 import my.food.tomas.healthyfood.data.local.models.Recipe;
-import my.food.tomas.healthyfood.data.local.models.RecipesList;
 
 /**
  * Created by Tomas on 27/10/2016.
@@ -30,8 +27,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     private Context context;
     private ArrayList<Recipe> data;
 
-    public RecipesAdapter(ArrayList<Recipe> data) {
+    public RecipesAdapter(ArrayList<Recipe> data, Context context) {
         this.data = data;
+        this.context = context;
     }
 
     @Override
@@ -44,9 +42,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         Recipe item = data.get(position);
         holder.titleView.setText(item.getTitle());
-        Picasso.with(holder.imageView.getContext()).load(item.getImageUrl()).into(holder.imageView);
+        Picasso.with(context).load(item.getImageUrl()).into(holder.imageView);
         holder.publisherView.setText(item.getPublisher());
-//        holder.rankView.setText(String.format("%.0f%%", item.getSocialRank()));
     }
 
     @Override
@@ -82,7 +79,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     public void addRecipesList(ArrayList<Recipe> recipesList) {
         this.data.clear();
         this.data.addAll(recipesList);
-        //notifyDataSetChanged();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

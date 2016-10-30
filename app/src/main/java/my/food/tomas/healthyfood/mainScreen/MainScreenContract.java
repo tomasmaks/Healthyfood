@@ -23,13 +23,11 @@ public class MainScreenContract {
 
         void showComplete();
 
-       // Observable<List<RecipesList>> getRecipesList();
     }
 
     interface Presenter extends BasePresenter {
 
         void loadRecipesList(String query);
 
-       // void loadRecipesListFromRemoteDatastore(String query);
     }
 }

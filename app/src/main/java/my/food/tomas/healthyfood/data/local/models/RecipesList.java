@@ -16,6 +16,7 @@ public class RecipesList implements Serializable {
     public RecipesList(ArrayList<Recipe> recipes) {
         this.recipes = recipes;
     }
+
     public ArrayList<Recipe> getRecipes() {
         return recipes;
     }

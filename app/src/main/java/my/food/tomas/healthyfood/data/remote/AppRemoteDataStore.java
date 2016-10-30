@@ -31,10 +31,6 @@ public class AppRemoteDataStore implements AppDataStore {
     @Inject
     Retrofit retrofit;
 
-//    @Inject
-//    AppLocalDataStore appLocalDataStore;
-
-
     public AppRemoteDataStore() {
         FoodApplication.getAppComponent().inject(this);
     }
@@ -55,24 +51,11 @@ public class AppRemoteDataStore implements AppDataStore {
         return call;
     }
 
-//    @Override
-//    public Observable<List<RecipesList>> getRecipesList(String query) {
-//        return retrofit.create(Food2ForkApi.class)
-//                .getRecipesList(
-//                        FoodApplication.API_KEY,
-//                        "pizza",
-//                        "r",
-//                        1
-//
-//                )
-//                .subscribeOn(Schedulers.io());
-//    }
-
 
     public interface Food2ForkApi {
         @GET("/api/search")
         Observable<RecipesList> getRecipesList(@Query("key") String key, @Query("q") String q,
-                                                                      @Query("sort") String sort, @Query("page") int page);
+                                               @Query("sort") String sort, @Query("page") int page);
 
         @GET("/api/get")
         Observable<RecipeGet> getRecipeGet(@Query("key") String key, @Query("rId") String rId);
