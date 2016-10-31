@@ -42,6 +42,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
     public static final String TAG = "MainFragment";
 
     private MainScreenContract.Presenter mPresenter;
+    private OnMainFragmentListener mainFragmentListener;
 
     String query;
 
@@ -96,12 +97,25 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
         ButterKnife.bind(this, rootView);
         recList = new ArrayList<>();
         recipesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recipesAdapter = new RecipesAdapter(recList, getActivity());
-        recipesRecyclerView.setAdapter(recipesAdapter);
-
+        setupRecipesAdapter();
         setupSwipeRefresh();
 
         return rootView;
+    }
+
+    private void setupRecipesAdapter() {
+
+        recipesAdapter = new RecipesAdapter(recList, getActivity());
+        recipesAdapter.setOnItemClickListener(new RecipesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (mainFragmentListener != null && recList != null) {
+                    mainFragmentListener.onStartRecipeActivity(recList.get(position).getId());
+                }
+            }
+        });
+        recipesRecyclerView.setAdapter(recipesAdapter);
+
     }
 
     @Override
@@ -216,8 +230,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
     public void loadRecipesList(String query) {
 
-        recipesAdapter = new RecipesAdapter(recList, getActivity());
-        recipesRecyclerView.setAdapter(recipesAdapter);
+        setupRecipesAdapter();
         mPresenter.loadRecipesList(query);
 
 

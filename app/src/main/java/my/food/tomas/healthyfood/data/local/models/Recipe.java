@@ -1,5 +1,7 @@
 package my.food.tomas.healthyfood.data.local.models;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -111,5 +113,16 @@ public class Recipe implements Serializable {
 
     public void setPublisherUrl(String publisherUrl) {
         this.publisherUrl = publisherUrl;
+    }
+
+    public String getId() {
+        String id = "";
+        try {
+            int lastIndex = getF2fUrl().lastIndexOf("/");
+            id = getF2fUrl().substring(lastIndex + 1);
+        } catch (Exception e) {
+            Log.e("Recipe", "Cannot get from f2f_url='" + getF2fUrl() + "'!");
+        }
+        return id;
     }
 }
