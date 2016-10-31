@@ -13,6 +13,7 @@ import my.food.tomas.healthyfood.data.local.models.Recipe;
 import my.food.tomas.healthyfood.data.local.models.RecipeGet;
 import my.food.tomas.healthyfood.data.local.models.RecipeSearchParams;
 import my.food.tomas.healthyfood.data.local.models.RecipesList;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -52,6 +53,16 @@ public class AppRemoteDataStore implements AppDataStore {
         return call;
     }
 
+    @Override
+    public Observable<RecipeGet> getRecipe(String id) {
+        Observable<RecipeGet> call = null;
+        if (retrofit != null) {
+            Food2ForkApi apiService = retrofit.create(Food2ForkApi.class);
+            call = apiService.getRecipe(API_KEY, id);
+        }
+        return call;
+    }
+
 
     public interface Food2ForkApi {
         @GET("/api/search")
@@ -59,6 +70,6 @@ public class AppRemoteDataStore implements AppDataStore {
                                                @Query("sort") String sort, @Query("page") int page);
 
         @GET("/api/get")
-        Observable<RecipeGet> getRecipeGet(@Query("key") String key, @Query("rId") String rId);
+        Observable<RecipeGet> getRecipe(@Query("key") String key, @Query("rId") String rId);
     }
 }
