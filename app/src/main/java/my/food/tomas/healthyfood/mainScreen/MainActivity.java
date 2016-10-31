@@ -55,4 +55,50 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnMa
                 .replace(R.id.fragment_container, mainFragment, MainFragment.TAG)
                 .commit();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        setupSearchView();
+        searchClearItem = menu.findItem(R.id.action_search_clear);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setupSearchView() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchRecipe(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    searchView.setQuery(prevSearchQuery, false);
+                    searchClearItem.setVisible(false);
+                } else if (prevSearchQuery != null && prevSearchQuery.length() > 0) {
+                    searchClearItem.setVisible(true);
+                }
+            }
+        });
+    }
+
+    private void searchRecipe(String query) {
+        prevSearchQuery = query;
+        if (mainFragment != null) {
+            mainFragment.setSearchQuery(query);
+            mainFragment.startSearch();
+        }
+    }
+
+
 }

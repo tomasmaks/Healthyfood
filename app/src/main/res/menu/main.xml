@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="search"
+        app:showAsAction="always"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
+
+    <item
+        android:id="@+id/action_search_clear"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/search_clear"
+        android:visible="false"
+        app:showAsAction="always"/>
+
+</menu>

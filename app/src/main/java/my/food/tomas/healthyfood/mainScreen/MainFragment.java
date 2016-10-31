@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -88,7 +89,6 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -160,6 +160,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
     };
 
     private void createCustomAnimation() {
+
         AnimatorSet set = new AnimatorSet();
 
         ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(floatingActionMenu.getMenuIconView(), "scaleX", 1.0f, 0.2f);
@@ -197,6 +198,21 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
                 recipesSwipeRefresh.setRefreshing(false);
             }
         });
+    }
+
+    public void startSearch() {
+        if (recipeSearchParams == null) {
+            recipeSearchParams = new RecipeSearchParams();
+        }
+        recipeSearchParams.page = 1;
+        mPresenter.loadRecipesList(API_Q);
+    }
+
+    public void setSearchQuery(String query) {
+        if (recipeSearchParams == null) {
+            recipeSearchParams = new RecipeSearchParams();
+        }
+        recipeSearchParams.query = query;
     }
 
 
