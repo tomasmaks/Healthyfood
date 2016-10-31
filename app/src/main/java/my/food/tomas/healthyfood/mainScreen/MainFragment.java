@@ -1,5 +1,9 @@
 package my.food.tomas.healthyfood.mainScreen;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,10 +13,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,10 +55,20 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
     ProgressBar recipesProgressBar;
     @Bind(R.id.recipes_swipe_refresh)
     SwipeRefreshLayout recipesSwipeRefresh;
+    @Bind(R.id.menu_yellow)
+    FloatingActionMenu floatingActionMenu;
+    @Bind(R.id.fab12)
+    FloatingActionButton floatingActionButton12;
+    @Bind(R.id.fab22)
+    FloatingActionButton floatingActionButton22;
+    @Bind(R.id.fab32)
+    FloatingActionButton floatingActionButton32;
 
     private RecipesAdapter recipesAdapter;
     private RecipeSearchParams recipeSearchParams;
     private ArrayList<Recipe> recList;
+
+    private List<FloatingActionMenu> menus = new ArrayList<>();
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -65,6 +85,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
         new MainScreenPresenter(appRemoteDataStore, this);
         mPresenter.loadRecipesList(API_Q);
+
     }
 
 
@@ -72,15 +93,29 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
         ButterKnife.bind(this, rootView);
-        recipesRecyclerView = (RecyclerView) rootView.findViewById(R.id.recipes_recycler_view);
         recList = new ArrayList<>();
         recipesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recipesAdapter = new RecipesAdapter(recList, getActivity());
         recipesRecyclerView.setAdapter(recipesAdapter);
 
+        setupSwipeRefresh();
+
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        floatingActionMenu.setClosedOnTouchOutside(true);
+        menus.add(floatingActionMenu);
+
+        floatingActionButton12.setOnClickListener(clickListener);
+        floatingActionButton22.setOnClickListener(clickListener);
+        floatingActionButton32.setOnClickListener(clickListener);
+
+        createCustomAnimation();
     }
 
     @Override
@@ -108,8 +143,65 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
         mPresenter = presenter;
     }
 
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.fab12:
+                    break;
+                case R.id.fab22:
+                    floatingActionButton22.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.fab32:
+                    floatingActionButton32.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
+
+    private void createCustomAnimation() {
+        AnimatorSet set = new AnimatorSet();
+
+        ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(floatingActionMenu.getMenuIconView(), "scaleX", 1.0f, 0.2f);
+        ObjectAnimator scaleOutY = ObjectAnimator.ofFloat(floatingActionMenu.getMenuIconView(), "scaleY", 1.0f, 0.2f);
+
+        ObjectAnimator scaleInX = ObjectAnimator.ofFloat(floatingActionMenu.getMenuIconView(), "scaleX", 0.2f, 1.0f);
+        ObjectAnimator scaleInY = ObjectAnimator.ofFloat(floatingActionMenu.getMenuIconView(), "scaleY", 0.2f, 1.0f);
+
+        scaleOutX.setDuration(50);
+        scaleOutY.setDuration(50);
+
+        scaleInX.setDuration(150);
+        scaleInY.setDuration(150);
+
+        scaleInX.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                floatingActionMenu.getMenuIconView().setImageResource(floatingActionMenu.isOpened()
+                        ? R.drawable.ic_close : R.drawable.fab_add);
+            }
+        });
+
+        set.play(scaleOutX).with(scaleOutY);
+        set.play(scaleInX).with(scaleInY).after(scaleOutX);
+        set.setInterpolator(new OvershootInterpolator(2));
+
+        floatingActionMenu.setIconToggleAnimatorSet(set);
+    }
+
+    private void setupSwipeRefresh() {
+        recipesSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadRecipesList(API_Q);
+                recipesSwipeRefresh.setRefreshing(false);
+            }
+        });
+    }
+
 
     public interface OnMainFragmentListener {
         public void onStartRecipeActivity(String id);
     }
+
 }

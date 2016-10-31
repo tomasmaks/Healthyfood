@@ -39,43 +39,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnMa
         startActivity(intent);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        setupSearchView();
-        searchClearItem = menu.findItem(R.id.action_search_clear);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_sort_top:
-                actionSortTop();
-                item.setChecked(true);
-                return true;
-            case R.id.action_sort_tranding:
-                actionSortTranding();
-                item.setChecked(true);
-                return true;
-            case R.id.action_view_list:
-                actionViewList();
-                item.setChecked(true);
-                return true;
-            case R.id.action_view_table:
-                actionViewTable();
-                item.setChecked(true);
-                return true;
-            case R.id.action_search_clear:
-                searchRecipe("");
-                searchClearItem.setVisible(false);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void initFragment(Bundle savedInstanceState) {
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) {
@@ -92,52 +55,4 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnMa
                 .replace(R.id.fragment_container, mainFragment, MainFragment.TAG)
                 .commit();
     }
-
-
-    private void setupSearchView() {
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchRecipe(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return true;
-            }
-        });
-        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    searchView.setQuery(prevSearchQuery, false);
-                    searchClearItem.setVisible(false);
-                } else if (prevSearchQuery != null && prevSearchQuery.length() > 0) {
-                    searchClearItem.setVisible(true);
-                }
-            }
-        });
-    }
-
-    private void searchRecipe(String query) {
-
-    }
-
-    private void actionSortTop() {
-
-    }
-
-    private void actionSortTranding() {
-
-    }
-
-    private void actionViewList() {
-
-    }
-
-    private void actionViewTable() {
-
-    }
-
 }
