@@ -41,10 +41,9 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
     public static final String TAG = "MainFragment";
 
-    private OnMainFragmentListener mainFragmentListener;
-
     private MainScreenContract.Presenter mPresenter;
-    public static final String API_Q = "pizza";
+
+    String query;
 
     @Inject
     AppRemoteDataStore appRemoteDataStore;
@@ -85,7 +84,8 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
         ButterKnife.bind(getActivity());
 
         new MainScreenPresenter(appRemoteDataStore, this);
-        mPresenter.loadRecipesList(API_Q);
+        recipeSearchParams.query = query;
+        mPresenter.loadRecipesList(query);
 
     }
 
@@ -194,18 +194,17 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
         recipesSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.loadRecipesList(API_Q);
+
+                 if (recList == null) {
+                    mPresenter.loadRecipesList(query);
+                }
+//                 else {
+//                     recipeSearchParams.query = query;
+//                    loadRecipesList(query);
+//                }
                 recipesSwipeRefresh.setRefreshing(false);
             }
         });
-    }
-
-    public void startSearch() {
-        if (recipeSearchParams == null) {
-            recipeSearchParams = new RecipeSearchParams();
-        }
-        recipeSearchParams.page = 1;
-        mPresenter.loadRecipesList(API_Q);
     }
 
     public void setSearchQuery(String query) {
@@ -213,6 +212,15 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
             recipeSearchParams = new RecipeSearchParams();
         }
         recipeSearchParams.query = query;
+    }
+
+    public void loadRecipesList(String query) {
+
+        recipesAdapter = new RecipesAdapter(recList, getActivity());
+        recipesRecyclerView.setAdapter(recipesAdapter);
+        mPresenter.loadRecipesList(query);
+
+
     }
 
 

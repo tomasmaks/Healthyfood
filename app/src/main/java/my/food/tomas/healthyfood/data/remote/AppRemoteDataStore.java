@@ -41,11 +41,12 @@ public class AppRemoteDataStore implements AppDataStore {
         Observable<RecipesList> call = null;
         if (retrofit != null) {
             Food2ForkApi apiService = retrofit.create(Food2ForkApi.class);
+
             call = apiService.getRecipesList(
                     FoodApplication.API_KEY,
-                        query,
-                        "r",
-                        1
+                    query,
+                    "r",
+                    1
             );
         }
         return call;

@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnMa
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void setupSearchView() {
+    public void setupSearchView() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnMa
                 return true;
             }
         });
+
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnMa
         prevSearchQuery = query;
         if (mainFragment != null) {
             mainFragment.setSearchQuery(query);
-            mainFragment.startSearch();
+            mainFragment.loadRecipesList(query);
         }
     }
 

@@ -24,10 +24,10 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
     private static final String TAG = MainScreenPresenter.class.getSimpleName();
     private Subscription mSubscription;
-    private CompositeSubscription compositeSubscription;
+   // private CompositeSubscription compositeSubscription;
     private AppRemoteDataStore appRemoteDataStore;
+   // private RecipeSearchParams recipeSearchParams;
     private MainScreenContract.View mView;
-    private RecipeSearchParams recipeSearchParams;
     String query;
 
 
