@@ -15,4 +15,6 @@
     <string name="recipes_more_progress">Loading recipes...</string>
 
     <string name="positive_button_search">Search</string>
+
+    <string name="action_share">share</string>
 </resources>

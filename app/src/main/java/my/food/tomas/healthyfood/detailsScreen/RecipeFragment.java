@@ -1,9 +1,11 @@
 package my.food.tomas.healthyfood.detailsScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ShareCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -102,7 +104,7 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
             Picasso.with(imageView.getContext()).load(recipe.getImageUrl()).into(imageView);
             publisherView.setText(Html.fromHtml(String.format("<a href=\"%s\">%s</a>", recipe.getPublisherUrl(), recipe.getPublisherUrl())));
             publisherView.setMovementMethod(LinkMovementMethod.getInstance());
-            rankView.setText(Html.fromHtml("Rank: " + recipe.getSocialRank()));
+            rankView.setText(Html.fromHtml("Rank: " + String.format("%.0f%%", recipe.getSocialRank())));
 
             if (recipe.getIngredients() != null) {
                 String ingredientsStr = "";
@@ -113,6 +115,19 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
 
             }
         }
+
+        mShareFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
+                        .setType("text/plain")
+                        .setText(recipe.getTitle() + ", " + recipe.getSourceUrl())
+                        .getIntent(), getString(R.string.action_share)));
+            }
+        });
+
+
+
     }
 
     @Override
@@ -129,4 +144,5 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
     public void setPresenter(RecipeContract.Presenter presenter) {
         mPresenter = presenter;
     }
+
 }
