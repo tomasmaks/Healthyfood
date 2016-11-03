@@ -104,7 +104,7 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
             Picasso.with(imageView.getContext()).load(recipe.getImageUrl()).into(imageView);
             publisherView.setText(Html.fromHtml(String.format("<a href=\"%s\">%s</a>", recipe.getPublisherUrl(), recipe.getPublisherUrl())));
             publisherView.setMovementMethod(LinkMovementMethod.getInstance());
-            rankView.setText(Html.fromHtml("Rank: " + String.format("%.0f%%", recipe.getSocialRank())));
+            rankView.setText(Html.fromHtml("Rank: " + recipe.getSocialRank()));
 
             if (recipe.getIngredients() != null) {
                 String ingredientsStr = "";

@@ -227,13 +227,9 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
             @Override
             public void onRefresh() {
 
-                 if (recList == null) {
+                if (query == null && recList.size() == 0) {
                     mPresenter.loadRecipesList(query);
                 }
-//                 else {
-//                     recipeSearchParams.query = query;
-//                    loadRecipesList(query);
-//                }
                 recipesSwipeRefresh.setRefreshing(false);
             }
         });
@@ -253,7 +249,6 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
 
     }
-
 
     public interface OnMainFragmentListener {
         public void onStartRecipeActivity(String id);
