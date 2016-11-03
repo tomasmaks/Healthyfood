@@ -2,6 +2,7 @@ package my.food.tomas.healthyfood.detailsScreen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -44,10 +45,12 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
     ImageView imageView;
     @Bind(R.id.recipe_publisher_view)
     TextView publisherView;
-//    @Bind(R.id.recipe_rank_view)
-//    TextView rankView;
+    @Bind(R.id.recipe_rank_view)
+    TextView rankView;
     @Bind(R.id.recipe_ingredients_view)
     TextView ingredientsView;
+    @Bind(R.id.share_fab)
+    FloatingActionButton mShareFab;
 
     private String recipeId;
     private Recipe recipe;
@@ -99,7 +102,7 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
             Picasso.with(imageView.getContext()).load(recipe.getImageUrl()).into(imageView);
             publisherView.setText(Html.fromHtml(String.format("<a href=\"%s\">%s</a>", recipe.getPublisherUrl(), recipe.getPublisherUrl())));
             publisherView.setMovementMethod(LinkMovementMethod.getInstance());
-          //  rankView.setText("Rank: " + recipe.getSocialRank());
+            rankView.setText(Html.fromHtml("Rank: " + recipe.getSocialRank()));
 
             if (recipe.getIngredients() != null) {
                 String ingredientsStr = "";

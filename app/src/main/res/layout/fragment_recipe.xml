@@ -1,66 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<ScrollView-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
-
-    <!--<LinearLayout-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/recipe_title_view"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:padding="@dimen/padding_half"-->
-            <!--android:textSize="18sp"-->
-            <!--tools:text="Recipe title"/>-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/recipe_image_view"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--tools:src="@android:drawable/btn_star"/>-->
-
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/recipe_publisher_view"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:padding="@dimen/padding_half"-->
-                <!--android:layout_alignParentLeft="true"-->
-                <!--android:textSize="16sp"-->
-                <!--tools:text="Publisher name"/>-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/recipe_rank_view"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:padding="@dimen/padding_half"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:textSize="16sp"-->
-                <!--tools:text="Social rank: 97%"/>-->
-
-        <!--</RelativeLayout>-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/recipe_ingredients_view"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:padding="@dimen/padding_half"-->
-            <!--android:textSize="18sp"-->
-            <!--tools:text="Ingredients"/>-->
-
-    <!--</LinearLayout>-->
-
-<!--</ScrollView>-->
-
 
 <android.support.design.widget.CoordinatorLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -110,7 +48,7 @@ tools:ignore="MergeRootFrame">
             <LinearLayout
                 android:id="@+id/meta_bar"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:elevation="4dp"
                 android:orientation="vertical"
@@ -125,13 +63,24 @@ tools:ignore="MergeRootFrame">
                     style="?android:attr/textAppearanceLarge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"/>
 
                 <TextView
                     android:id="@+id/recipe_publisher_view"
                     style="?android:attr/textAppearanceSmall"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"/>
+
+                <TextView
+                    android:id="@+id/recipe_rank_view"
+                    style="?android:attr/textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#00897B"
+                    android:layout_marginBottom="2dp"/>
 
             </LinearLayout>
 
@@ -187,6 +136,7 @@ tools:ignore="MergeRootFrame">
     android:layout_margin="4dp"
     android:clickable="true"
     android:contentDescription="Share"
+    android:src="@drawable/ic_share_black_24dp"
     app:elevation="4dp"
     app:layout_anchor="@id/app_bar"
     app:layout_anchorGravity="bottom|end" />
