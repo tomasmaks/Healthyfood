@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
@@ -124,5 +125,15 @@ public class Recipe implements Serializable {
             Log.e("Recipe", "Cannot get from f2f_url='" + getF2fUrl() + "'!");
         }
         return id;
+    }
+
+    private ArrayList<String> ingredients;
+
+    public ArrayList<String> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(ArrayList<String> ingredients) {
+        this.ingredients = ingredients;
     }
 }

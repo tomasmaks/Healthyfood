@@ -44,6 +44,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         holder.titleView.setText(item.getTitle());
         Picasso.with(context).load(item.getImageUrl()).into(holder.imageView);
         holder.publisherView.setText(item.getPublisher());
+        holder.rankView.setText("Rank: " + item.getSocialRank());
     }
 
     @Override
