@@ -2,11 +2,11 @@ package my.food.tomas.healthyfood.detailsScreen;
 
 import android.util.Log;
 
+import my.food.tomas.healthyfood.data.local.models.Recipe;
 import my.food.tomas.healthyfood.data.local.models.RecipeGet;
 import my.food.tomas.healthyfood.data.local.models.RecipesList;
 import my.food.tomas.healthyfood.data.remote.AppRemoteDataStore;
 import my.food.tomas.healthyfood.mainScreen.MainScreenContract;
-import my.food.tomas.healthyfood.mainScreen.MainScreenPresenter;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

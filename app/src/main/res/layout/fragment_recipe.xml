@@ -49,13 +49,13 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/recipe_ingredients_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/padding_half"
-            android:textSize="18sp"
-            tools:text="Ingredients"/>
+        <!--<TextView-->
+            <!--android:id="@+id/recipe_ingredients_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/padding_half"-->
+            <!--android:textSize="18sp"-->
+            <!--tools:text="Ingredients"/>-->
 
     </LinearLayout>
 

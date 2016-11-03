@@ -2,6 +2,7 @@ package my.food.tomas.healthyfood.detailsScreen;
 
 import my.food.tomas.healthyfood.BasePresenter;
 import my.food.tomas.healthyfood.BaseView;
+import my.food.tomas.healthyfood.data.local.models.Recipe;
 import my.food.tomas.healthyfood.data.local.models.RecipeGet;
 import my.food.tomas.healthyfood.data.local.models.RecipesList;
 import my.food.tomas.healthyfood.mainScreen.MainScreenContract;
@@ -25,10 +26,7 @@ public class RecipeContract {
 
     interface Presenter extends BasePresenter {
 
-        void loadRecipeDetails(String query);
+        void loadRecipeDetails(String id);
 
     }
-
-
-
 }

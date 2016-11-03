@@ -5,5 +5,13 @@ package my.food.tomas.healthyfood.data.local.models;
  */
 
 public class RecipeGet {
-    public Recipe recipe;
+    private Recipe recipe;
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
 }
