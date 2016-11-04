@@ -3,9 +3,13 @@ Healthyfood is app where you can find your favorite food recipes! Tools used: Re
 
 ### Images
 
+![alt tag](https://firebasestorage.googleapis.com/v0/b/basketball-training-app.appspot.com/o/Healthyfood%2F14962446_1334115976601560_1703655019_n.jpg?alt=media&token=fcaf1c4a-66ec-4d0e-a28f-3ab7f8e12fac)
+
+----------------
+
 ![alt tag](https://firebasestorage.googleapis.com/v0/b/basketball-training-app.appspot.com/o/Healthyfood%2F14958295_1334115936601564_919019019_n.jpg?alt=media&token=0cdd125d-449e-45e4-a40e-170461fe0e6b)
 
-![alt tag](https://firebasestorage.googleapis.com/v0/b/basketball-training-app.appspot.com/o/Healthyfood%2F14962446_1334115976601560_1703655019_n.jpg?alt=media&token=fcaf1c4a-66ec-4d0e-a28f-3ab7f8e12fac)
+
 
 ### Tools
 
