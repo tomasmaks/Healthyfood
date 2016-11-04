@@ -52,11 +52,11 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
     @Bind(R.id.recipe_ingredients_view)
     TextView ingredientsView;
     @Bind(R.id.share_fab)
-    FloatingActionButton mShareFab;
+    FloatingActionButton shareFab;
 
     private String recipeId;
     private Recipe recipe;
-    private RecipeContract.Presenter mPresenter;
+    private RecipeContract.Presenter recipePresenter;
 
     public static RecipeFragment newInstance(String id) {
         RecipeFragment fragment = new RecipeFragment();
@@ -84,7 +84,7 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
         ButterKnife.bind(getActivity());
         new RecipePresenter(appRemoteDataStore, this);
         readArguments();
-        mPresenter.loadRecipeDetails(recipeId);
+        recipePresenter.loadRecipeDetails(recipeId);
     }
 
     @Nullable
@@ -116,7 +116,7 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
             }
         }
 
-        mShareFab.setOnClickListener(new View.OnClickListener() {
+        shareFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
@@ -142,7 +142,7 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
 
     @Override
     public void setPresenter(RecipeContract.Presenter presenter) {
-        mPresenter = presenter;
+        recipePresenter = presenter;
     }
 
 }

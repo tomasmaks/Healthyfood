@@ -19,14 +19,15 @@ import rx.schedulers.Schedulers;
 public class RecipePresenter implements RecipeContract.Presenter {
 
     private static final String TAG = RecipePresenter.class.getSimpleName();
-    private Subscription mSubscription;
+    private Subscription subscription;
     private AppRemoteDataStore appRemoteDataStore;
-    private RecipeContract.View mView;
+    private RecipeContract.View recipeView;
+    String id;
 
-    public RecipePresenter(AppRemoteDataStore appRemoteDataStore, RecipeContract.View mView) {
+    public RecipePresenter(AppRemoteDataStore appRemoteDataStore, RecipeContract.View view) {
         this.appRemoteDataStore = appRemoteDataStore;
-        this.mView = mView;
-        mView.setPresenter(this);
+        this.recipeView = view;
+        view.setPresenter(this);
     }
 
     @Override
@@ -37,18 +38,18 @@ public class RecipePresenter implements RecipeContract.Presenter {
                     @Override
                     public void onCompleted() {
                         Log.d(TAG, "Complete");
-                        mView.showComplete();
+                        recipeView.showComplete();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.d(TAG, e.toString());
-                        mView.showError(e.toString());
+                        recipeView.showError(e.toString());
                     }
 
                     @Override
                     public void onNext(RecipeGet recipeGet) {
-                        mView.showRecipeDetails(recipeGet);
+                        recipeView.showRecipeDetails(recipeGet);
                     }
                 });
     }
@@ -56,14 +57,14 @@ public class RecipePresenter implements RecipeContract.Presenter {
 
     @Override
     public void subscribe() {
-
+        loadRecipeDetails(id);
     }
 
     @Override
     public void unsubscribe() {
         //Unsubscribe Rx subscription
-        if (mSubscription != null && mSubscription.isUnsubscribed())
-            mSubscription.unsubscribe();
+        if (subscription != null && subscription.isUnsubscribed())
+            subscription.unsubscribe();
     }
 
 

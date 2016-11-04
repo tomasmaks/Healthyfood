@@ -42,7 +42,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
     public static final String TAG = "MainFragment";
 
-    private MainScreenContract.Presenter mPresenter;
+    private MainScreenContract.Presenter mainPresenter;
     private OnMainFragmentListener mainFragmentListener;
 
     String query;
@@ -87,7 +87,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
         new MainScreenPresenter(appRemoteDataStore, this);
         recipeSearchParams.query = query;
-        mPresenter.loadRecipesList(query);
+        mainPresenter.loadRecipesList(query);
 
     }
 
@@ -172,7 +172,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
     @Override
     public void setPresenter(MainScreenContract.Presenter presenter) {
-        mPresenter = presenter;
+        mainPresenter = presenter;
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -228,7 +228,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
             public void onRefresh() {
 
                 if (query == null && recList.size() == 0) {
-                    mPresenter.loadRecipesList(query);
+                    mainPresenter.loadRecipesList(query);
                 }
                 recipesSwipeRefresh.setRefreshing(false);
             }
@@ -245,7 +245,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
     public void loadRecipesList(String query) {
 
         setupRecipesAdapter();
-        mPresenter.loadRecipesList(query);
+        mainPresenter.loadRecipesList(query);
 
 
     }

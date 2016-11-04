@@ -23,16 +23,16 @@ import rx.subscriptions.CompositeSubscription;
 public class MainScreenPresenter implements MainScreenContract.Presenter {
 
     private static final String TAG = MainScreenPresenter.class.getSimpleName();
-    private Subscription mSubscription;
+    private Subscription subscription;
     private AppRemoteDataStore appRemoteDataStore;
-    private MainScreenContract.View mView;
+    private MainScreenContract.View mainView;
     String query;
 
 
-    public MainScreenPresenter(AppRemoteDataStore appRemoteDataStore, MainScreenContract.View mView) {
+    public MainScreenPresenter(AppRemoteDataStore appRemoteDataStore, MainScreenContract.View view) {
         this.appRemoteDataStore = appRemoteDataStore;
-        this.mView = mView;
-        mView.setPresenter(this);
+        this.mainView = view;
+        view.setPresenter(this);
     }
 
     @Override
@@ -43,18 +43,18 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
                     @Override
                     public void onCompleted() {
                         Log.d(TAG, "Complete");
-                        mView.showComplete();
+                        mainView.showComplete();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.d(TAG, e.toString());
-                        mView.showError(e.toString());
+                        mainView.showError(e.toString());
                     }
 
                     @Override
                     public void onNext(RecipesList recipesList) {
-                        mView.showRecipesList(recipesList);
+                        mainView.showRecipesList(recipesList);
                     }
                 });
     }
@@ -67,8 +67,8 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
     @Override
     public void unsubscribe() {
         //Unsubscribe Rx subscription
-        if (mSubscription != null && mSubscription.isUnsubscribed())
-            mSubscription.unsubscribe();
+        if (subscription != null && subscription.isUnsubscribed())
+            subscription.unsubscribe();
     }
 
 }
