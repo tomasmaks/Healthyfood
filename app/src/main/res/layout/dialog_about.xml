@@ -12,5 +12,23 @@
     tools:context="my.food.tomas.healthyfood.mainScreen.MainActivity">
 
 
+    <TextView
+        android:id="@+id/about1_view"
+        style="?android:attr/textAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/about2_view"
+        style="?android:attr/textAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_below="@id/about1_view"/>
 
 </RelativeLayout>

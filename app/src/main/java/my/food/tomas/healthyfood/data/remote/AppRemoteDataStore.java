@@ -32,6 +32,8 @@ public class AppRemoteDataStore implements AppDataStore {
     @Inject
     Retrofit retrofit;
 
+    private RecipeSearchParams recipeSearchParams;
+
     public AppRemoteDataStore() {
         FoodApplication.getAppComponent().inject(this);
     }
@@ -43,11 +45,13 @@ public class AppRemoteDataStore implements AppDataStore {
         if (retrofit != null) {
             Food2ForkApi apiService = retrofit.create(Food2ForkApi.class);
 
+            recipeSearchParams = new RecipeSearchParams();
+
             call = apiService.getRecipesList(
                     FoodApplication.API_KEY,
                     query,
-                    "r",
-                    1
+                    recipeSearchParams.sort ,
+                    recipeSearchParams.page
             );
         }
         return call;

@@ -17,4 +17,6 @@
     <string name="positive_button_search">Search</string>
 
     <string name="action_share">share</string>
+
+    <string name="positive_button_create">Get Back</string>
 </resources>

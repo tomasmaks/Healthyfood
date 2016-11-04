@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -69,6 +70,7 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
     private RecipesAdapter recipesAdapter;
     private RecipeSearchParams recipeSearchParams;
     private ArrayList<Recipe> recList;
+    private RecyclerView.LayoutManager recipesLayoutManager;
 
     private List<FloatingActionMenu> menus = new ArrayList<>();
 
@@ -159,13 +161,12 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
 
     @Override
     public void showError(String message) {
-        Toast.makeText(getActivity(), "Error loading post", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Error loading post, please check your internet connection!", Toast.LENGTH_SHORT).show();
         recipesProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void showComplete() {
-        Toast.makeText(getActivity(), "Completed loading", Toast.LENGTH_SHORT).show();
         recipesProgressBar.setVisibility(View.INVISIBLE);
     }
 
@@ -179,13 +180,27 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+                case R.id.fab5:
+                    recipeSearchParams = new RecipeSearchParams();
+                    recipeSearchParams.sort = "t";
+                    loadRecipesList(query);
+                    break;
+                case R.id.fab10:
+                    recipeSearchParams = new RecipeSearchParams();
+                    recipeSearchParams.sort = "r";
+                    loadRecipesList(query);
+                    break;
                 case R.id.fab12:
+                    recipesLayoutManager = new LinearLayoutManager(getActivity());
+                    recipesRecyclerView.setLayoutManager(recipesLayoutManager);
                     break;
                 case R.id.fab22:
-                    floatingActionButton22.setVisibility(View.VISIBLE);
+                    recipesLayoutManager = new GridLayoutManager(getActivity(), 2);
+                    recipesRecyclerView.setLayoutManager(recipesLayoutManager);
                     break;
                 case R.id.fab32:
-                    floatingActionButton32.setVisibility(View.VISIBLE);
+                    DialogFragment dialog = AboutDialogFragment.newInstance();
+                    dialog.show(getActivity().getSupportFragmentManager(), "AboutDialogFragment");
                     break;
             }
         }

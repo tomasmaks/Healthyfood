@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -104,7 +106,7 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
             Picasso.with(imageView.getContext()).load(recipe.getImageUrl()).into(imageView);
             publisherView.setText(Html.fromHtml(String.format("<a href=\"%s\">%s</a>", recipe.getPublisherUrl(), recipe.getPublisherUrl())));
             publisherView.setMovementMethod(LinkMovementMethod.getInstance());
-            rankView.setText(Html.fromHtml("Rank: " + recipe.getSocialRank()));
+            rankView.setText(Html.fromHtml("Rank: " + String.format(Locale.getDefault(), "%.2f%%", Double.parseDouble(recipe.getSocialRank())) + ""));
 
             if (recipe.getIngredients() != null) {
                 String ingredientsStr = "";
@@ -132,12 +134,11 @@ public class RecipeFragment extends Fragment implements RecipeContract.View {
 
     @Override
     public void showError(String message) {
-        Toast.makeText(getActivity(), "Error loading post", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Error loading post, please check your internet connection!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showComplete() {
-        Toast.makeText(getActivity(), "Completed loading", Toast.LENGTH_SHORT).show();
     }
 
     @Override

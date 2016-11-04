@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,7 +46,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         holder.titleView.setText(item.getTitle());
         Picasso.with(context).load(item.getImageUrl()).into(holder.imageView);
         holder.publisherView.setText(item.getPublisher());
-        holder.rankView.setText("Rank: " + item.getSocialRank());
+        holder.rankView.setText("Rank: " + String.format(Locale.getDefault(), "%.2f%%", Double.parseDouble(item.getSocialRank())) + "");
     }
 
     @Override

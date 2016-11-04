@@ -46,11 +46,27 @@
         fab:menu_colorRipple="#D99200">
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            fab:fab_label="Sort by trendingness"
+            style="@style/MenuButtonsStyle" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            fab:fab_label="Sort by popularity"
+            style="@style/MenuButtonsStyle" />
+
+        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_edit"
-            fab:fab_label="Menu item 1"
+            fab:fab_label="View List"
             style="@style/MenuButtonsStyle" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -58,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_edit"
-            fab:fab_label="Menu item 2"
+            fab:fab_label="View Table"
             style="@style/MenuButtonsStyle" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -66,8 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_edit"
-            fab:fab_label="Search"
-            android:onClick="showSearchDialog"
+            fab:fab_label="About Us"
             style="@style/MenuButtonsStyle" />
 
     </com.github.clans.fab.FloatingActionMenu>
