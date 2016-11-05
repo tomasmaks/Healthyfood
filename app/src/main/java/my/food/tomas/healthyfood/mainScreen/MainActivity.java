@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import my.food.tomas.healthyfood.FoodApplication;
 import my.food.tomas.healthyfood.R;
 import my.food.tomas.healthyfood.data.local.models.RecipeSearchParams;
 import my.food.tomas.healthyfood.detailsScreen.RecipeActivity;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnMa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_host);
         initFragment(savedInstanceState);
-       // recipeSearchParams = new RecipeSearchParams();
+        FoodApplication.getAppComponent().inject(this);
     }
 
     @Override
@@ -101,7 +102,4 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnMa
             mainFragment.loadRecipesList(query);
         }
     }
-
-
-
 }

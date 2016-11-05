@@ -180,16 +180,6 @@ public class MainFragment extends Fragment implements MainScreenContract.View {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.fab5:
-                    recipeSearchParams = new RecipeSearchParams();
-                    recipeSearchParams.sort = "t";
-                    loadRecipesList(query);
-                    break;
-                case R.id.fab10:
-                    recipeSearchParams = new RecipeSearchParams();
-                    recipeSearchParams.sort = "r";
-                    loadRecipesList(query);
-                    break;
                 case R.id.fab12:
                     recipesLayoutManager = new LinearLayoutManager(getActivity());
                     recipesRecyclerView.setLayoutManager(recipesLayoutManager);

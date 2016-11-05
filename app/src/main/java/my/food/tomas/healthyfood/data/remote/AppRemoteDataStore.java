@@ -45,7 +45,9 @@ public class AppRemoteDataStore implements AppDataStore {
         if (retrofit != null) {
             Food2ForkApi apiService = retrofit.create(Food2ForkApi.class);
 
-            recipeSearchParams = new RecipeSearchParams();
+            if (recipeSearchParams == null){
+                recipeSearchParams = new RecipeSearchParams();
+            }
 
             call = apiService.getRecipesList(
                     FoodApplication.API_KEY,

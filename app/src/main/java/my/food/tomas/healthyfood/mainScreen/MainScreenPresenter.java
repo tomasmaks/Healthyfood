@@ -24,6 +24,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
     private static final String TAG = MainScreenPresenter.class.getSimpleName();
     private Subscription subscription;
+    private CompositeSubscription compositeSubscription;
     private AppRemoteDataStore appRemoteDataStore;
     private MainScreenContract.View mainView;
     String query;
@@ -35,9 +36,38 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
         view.setPresenter(this);
     }
 
+//    @Override
+//    public void loadRecipesList(String query) {
+//        new AppRemoteDataStore().getRecipesList(query).observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.newThread())
+//                .subscribe(new Observer<RecipesList>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        Log.d(TAG, "Complete");
+//                        mainView.showComplete();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.d(TAG, e.toString());
+//                        mainView.showError(e.toString());
+//                    }
+//
+//                    @Override
+//                    public void onNext(RecipesList recipesList) {
+//                        mainView.showRecipesList(recipesList);
+//                    }
+//                });
+//    }
+
     @Override
     public void loadRecipesList(String query) {
-        new AppRemoteDataStore().getRecipesList(query).observeOn(AndroidSchedulers.mainThread())
+        if (appRemoteDataStore == null){
+            appRemoteDataStore = new AppRemoteDataStore();
+        }
+
+        subscription = appRemoteDataStore.getRecipesList(query)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(new Observer<RecipesList>() {
                     @Override
@@ -70,5 +100,4 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
         if (subscription != null && subscription.isUnsubscribed())
             subscription.unsubscribe();
     }
-
 }
