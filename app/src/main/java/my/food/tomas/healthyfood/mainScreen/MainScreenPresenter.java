@@ -36,30 +36,6 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
         view.setPresenter(this);
     }
 
-//    @Override
-//    public void loadRecipesList(String query) {
-//        new AppRemoteDataStore().getRecipesList(query).observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.newThread())
-//                .subscribe(new Observer<RecipesList>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        Log.d(TAG, "Complete");
-//                        mainView.showComplete();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.d(TAG, e.toString());
-//                        mainView.showError(e.toString());
-//                    }
-//
-//                    @Override
-//                    public void onNext(RecipesList recipesList) {
-//                        mainView.showRecipesList(recipesList);
-//                    }
-//                });
-//    }
-
     @Override
     public void loadRecipesList(String query) {
         if (appRemoteDataStore == null){
@@ -96,7 +72,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
     @Override
     public void unsubscribe() {
-        //Unsubscribe Rx subscription
+        
         if (subscription != null && subscription.isUnsubscribed())
             subscription.unsubscribe();
     }
